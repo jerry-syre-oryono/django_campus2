@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from .models import Department
 
-# Create your views here.
+def list_departments(request):
+    departments = Department.objects.all()
+    return render(request, 'departments/list.html', {'departments': departments})
