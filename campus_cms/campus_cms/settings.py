@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +38,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+      # Third-party apps
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    
+    # Local apps
+    'main',
+    'students',
+    'courses',
+    'departments',
 ]
+
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS =[
+    "127.0.0.1",
+]
+
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"        # Adjust this path if npm is installed elsewhere
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'campus_cms.urls'
@@ -114,9 +134,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Custom color palette
+TAILWIND_CUSTOM_COLORS = {
+    'primary': {
+        '50': '#fdf2f8',
+        '100': '#fce7f3',
+        '200': '#fbcfe8',
+        '300': '#f9a8d4',
+        '400': '#f472b6',
+        '500': '#ec4899',  # Rose-500
+        '600': '#db2777',
+        '700': '#be185d',
+        '800': '#9d174d',
+        '900': '#831843',
+    },
+    'secondary': {
+        '500': '#000000',  # Black
+    },
+    'accent': {
+        '500': '#ffffff',  # White
+    }
+}
